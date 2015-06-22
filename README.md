@@ -17,7 +17,7 @@ and start the hidden service during startup of your web backend, probably
 in `config.ru`, for example:
 
 ```ruby
-require 'ruby-hidden-service'
+require 'tor/hidden-service'
 
 hidden_service = Tor::HiddenService.new(
   private_key: ENV['HIDDEN_SERVICE_PRIVATE_KEY'],
