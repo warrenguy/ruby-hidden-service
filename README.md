@@ -5,6 +5,8 @@ Bring up a Tor hidden service from within your Ruby app.
 You might find this useful to run a hidden service in your Heroku/Dokku or
 other containerised infrastructure.
 
+Example Sinatra app: [heroku-sinatra-hidden-service](https://github.com/warrenguy/heroku-sinatra-hidden-service)
+
 ## Usage
 
 Add the gem to your Gemfile:
