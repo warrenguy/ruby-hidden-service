@@ -23,10 +23,20 @@ module Tor
       begin
         @tor_pid = File.read(open("#{@base_dir}/pid")).strip.to_i
       rescue Errno::ENOENT
-        log_message "Waiting for Tor PID to appear..."
+        log_message "Waiting for Tor PID file to appear..."
         sleep 1
         retry
       end
+
+      begin
+        @tor_controller = Tor::Controller.new(port: @options[:tor_control_port])
+      rescue Errno::ECONNREFUSED
+        log_message "Waiting for Tor control port to open..."
+        sleep 1
+        retry
+      end
+
+      @tor_controller.authenticate
 
       log_message "Started Tor with PID #{@tor_pid} on control port #{@options[:tor_control_port]}"
 
@@ -40,6 +50,10 @@ module Tor
     def hostname
       return nil unless (@tor_pid and (hostname = File.read(open("#{@base_dir}/hidden_service/hostname"))))
       return hostname.strip
+    end
+
+    def running?
+      @tor_controller.connected?
     end
 
     private
