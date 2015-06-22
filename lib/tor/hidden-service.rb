@@ -37,6 +37,11 @@ module Tor
       end
     end
 
+    def hostname
+      return nil unless (@tor_pid and (hostname = File.read(open("#{@base_dir}/hidden_service/hostname"))))
+      return hostname.strip
+    end
+
     private
 
     def parse_options(options)
@@ -55,6 +60,7 @@ module Tor
         File.writable? parsed_options[:temp_dir] or
         FileUtils.mkdir_p parsed_options[:temp_dir])
       raise ArgumentError, "Private key is not a valid 1024 bit RSA private key" unless (
+        parsed_options[:private_key] and
         OpenSSL::PKey::RSA.new(parsed_options[:private_key]).private? and
         OpenSSL::PKey::RSA.new(parsed_options[:private_key]).n.num_bits == 1024)
       raise ArgumentError, "Must provide option: #{parsed_options.key(nil).to_s}" if parsed_options.values.include? nil

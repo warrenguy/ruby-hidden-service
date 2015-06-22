@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'ruby-hidden-service'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.licenses    = ['MIT']
   s.summary     = 'Automatically set up and tear down a Tor hidden service'
   s.description = 'Automatically set up and tear down a Tor hidden service'
